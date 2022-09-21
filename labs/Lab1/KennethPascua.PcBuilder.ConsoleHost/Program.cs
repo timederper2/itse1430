@@ -13,10 +13,12 @@ do
         //case MenuOption.Clear: ClearOrder(); break;
         //case MenuOption.Edit: EditOrder(); break;
         case MenuOption.Quit: done = true; break;
-
-        default: break;
+        case MenuOption.Error: DisplayErrorMessage(); break;
     }
+    done = QuitConfirmation(done);
 } while (!done);
+
+
 
 void DisplayInformation ()
 {
@@ -25,6 +27,27 @@ void DisplayInformation ()
     Console.WriteLine("Kenneth V. Pascua");
     Console.WriteLine("ITSE 1430");
     Console.WriteLine(thisDay.ToString());
+}
+bool QuitConfirmation (bool done)
+{
+    Console.WriteLine("Are you sure you want to quit? (Y/N?)");
+    ConsoleKeyInfo key = Console.ReadKey(true);
+    var loop = true;
+
+    do
+    {
+        switch (key.Key)
+        {
+            case ConsoleKey.Y: return true;
+            case ConsoleKey.N: return false; 
+
+            default : return false;
+        }
+    } while (loop);
+}
+void DisplayErrorMessage ()
+{
+    Console.WriteLine("Sorry, try again!");
 }
 
 MenuOption DisplayMenu ()
@@ -54,6 +77,8 @@ MenuOption DisplayMenu ()
             case ConsoleKey.E: return MenuOption.Edit;
             case ConsoleKey.A: return MenuOption.Add;
             case ConsoleKey.Q: return MenuOption.Quit;
+
+            default: return MenuOption.Error;
         }
     }while (true);
 }

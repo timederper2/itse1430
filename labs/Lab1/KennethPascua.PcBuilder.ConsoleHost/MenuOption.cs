@@ -9,4 +9,5 @@ enum MenuOption
     Edit,
     Add,
     Quit,
+    Error,
 }
