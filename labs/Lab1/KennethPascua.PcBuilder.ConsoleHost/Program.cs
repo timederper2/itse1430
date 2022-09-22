@@ -15,9 +15,10 @@ string processorName = "";
 string memoryName = "";
 var done = false;
 bool isOrder = false;
+
 do
 {
-    RunningPrice(price);
+    RunningPrice();
     var input = DisplayMenu();
     Console.WriteLine();
     switch (input)
@@ -33,7 +34,7 @@ do
         done = QuitConfirmation(done);
 } while (!done);
 
-
+//Here be Functions
 
 void DisplayInformation ()
 {
@@ -97,21 +98,88 @@ MenuOption DisplayMenu ()
 }
 void NewOrder ()
 {
-    RunningPrice(price);
-
+    RunningPrice();
+    bool isTrue = true;
     isOrder = true;
 
-    processorName = processorChoice("Decide your processor: ", true);
+    processorName = processorChoice("Decide your processor: ");
 
-    memoryName = memoryChoice("Decide your memory: ", true);
+    do
+    {
+        if (processorName == "")
+        {
+            processorName = processorChoice("Decide your processor: ");
+        } else
+            isTrue = false;
+    }while (isTrue);
+    
+    isTrue = true;
 
-    primaryStorageName = primaryStorageChoice("Decide your primary storage: ", true);
+    memoryName = memoryChoice("Decide your memory: ");
 
-    secondaryStorageName = secondaryStorageChoice("Decide your secondary storage: ", true);
+    do
+    {
+        if (memoryName == "")
+        {
+            memoryName = memoryChoice("Decide your memory: ");
+        } else
+            isTrue = false;
+    } while (isTrue);
 
-    graphicsName = graphicsChoice("Decide your graphics card: ", true);
+    isTrue = true;
 
-    osName = osChoice("Decide your operating system: ", true);
+    primaryStorageName = primaryStorageChoice("Decide your primary storage: ");
+
+    do
+    {
+        if (primaryStorageName == "")
+        {
+            primaryStorageName = primaryStorageChoice("Decide your primary storage: ");
+        } else
+            isTrue = false;
+    } while (isTrue);
+
+    isTrue = true;
+
+    secondaryStorageName = secondaryStorageChoice("Decide your secondary storage: ");
+
+    do
+    {
+        if (secondaryStorageName == "")
+        {
+            secondaryStorageName = secondaryStorageChoice("Decide your secondary storage: ");
+        } else
+            isTrue = false;
+    } while (isTrue);
+
+    isTrue = true;
+
+    graphicsName = graphicsChoice("Decide your graphics card: ");
+
+    do
+    {
+        if (graphicsName == "")
+        {
+            graphicsName = graphicsChoice("Decide your graphics card: ");
+        } else
+            isTrue = false;
+    } while (isTrue);
+
+    isTrue = true;
+
+    osName = osChoice("Decide your operating system: ");
+
+    do
+    {
+        if (osName == "")
+        {
+            osName = osChoice("Decide your operating system: ");
+        } else
+            isTrue = false;
+    } while (isTrue);
+
+    isTrue = true;
+
 }
 
 void ViewOrder()
@@ -121,12 +189,14 @@ void ViewOrder()
         Console.WriteLine("No order available!");
         return;
     }
+    Console.WriteLine("");
     Console.WriteLine("Processor: " + processorName + "  $" + processorValue);
     Console.WriteLine("Memory: " + memoryName + "  $" + memoryValue);
     Console.WriteLine("Primary Storage: " + primaryStorageName + "  $" + primaryStorageValue);
     Console.WriteLine("Secondary Storage: " + secondaryStorageName + "  $" + secondaryStorageValue);
     Console.WriteLine("Graphics Card: " + graphicsName + "  $" + graphicsValue);
     Console.WriteLine("Operating System: " + osName + "  $" + osValue);
+    Console.WriteLine("");
 }
 void ClearOrder()
 {
@@ -174,12 +244,12 @@ void EditOrder ()
 
         switch (key.Key)
         {
-            case ConsoleKey.P: processorChoice("Select new processor: ", true); return;
-            case ConsoleKey.M: memoryChoice ("Select new memory: ", true); return;
-            case ConsoleKey.H: primaryStorageChoice("Select new hard drive: ", true); return;
-            case ConsoleKey.S: secondaryStorageChoice("Select new backup drive: ", true); return;
-            case ConsoleKey.G: graphicsChoice("Select new graphics card: ", true); return;
-            case ConsoleKey.O: osChoice("Select new operating system: ", true); return;
+            case ConsoleKey.P: processorChoice("Select new processor: "); return;
+            case ConsoleKey.M: memoryChoice ("Select new memory: "); return;
+            case ConsoleKey.H: primaryStorageChoice("Select new hard drive: "); return;
+            case ConsoleKey.S: secondaryStorageChoice("Select new backup drive: "); return;
+            case ConsoleKey.G: graphicsChoice("Select new graphics card: "); return;
+            case ConsoleKey.O: osChoice("Select new operating system: "); return;
             case ConsoleKey.N: return ;
          
         }
@@ -203,10 +273,11 @@ bool ReadBoolean ( string message )
     } while (true);
 }
 
-string processorChoice ( string message, bool required )
+string processorChoice ( string message)
 {
     price = 0;
     isOrder = true;
+    Console.WriteLine("");
     Console.WriteLine(message);
     Console.WriteLine("A) AMD Ryzen 9 5900X ($1410)");
     Console.WriteLine("B) AMD Ryzen 7 5700X ($1270)");
@@ -219,27 +290,22 @@ string processorChoice ( string message, bool required )
 
     while (true)
     {
-        string value = "";
-
         switch (key.Key)
         {
-            case ConsoleKey.A: return processorName = "AMD Ryzen 9 5900X"; 
-            case ConsoleKey.B: return processorName = "AMD Ryzen 7 5700X"; 
+            case ConsoleKey.A: return processorName = "AMD Ryzen 9 5900X";
+            case ConsoleKey.B: return processorName = "AMD Ryzen 7 5700X";
             case ConsoleKey.C: return processorName = "AMD Ryzen 5 5600X";
             case ConsoleKey.D: return processorName = "Intel i9-12900K";
             case ConsoleKey.E: return processorName = "Intel i7-12700K";
             case ConsoleKey.F: return processorName = "Intel i5-12600K";
+            default: Console.WriteLine("Enter a valid value"); return processorName;
         }
-
-        if (value != "" || !required)
-            return processorName;
-
-        Console.WriteLine("Value is required");
     };
 }
 
-string memoryChoice ( string message, bool required )
+string memoryChoice ( string message)
 {
+    Console.WriteLine("");
     Console.WriteLine(message);
     Console.WriteLine("A) 8 GB ($30)");
     Console.WriteLine("B) 16 GB ($40)");
@@ -251,25 +317,21 @@ string memoryChoice ( string message, bool required )
 
     while (true)
     {
-        string value = "";
         switch (key.Key)
         {
-            case ConsoleKey.A: return value = "8 GB";
-            case ConsoleKey.B: return value = "16 GB";
-            case ConsoleKey.C: return value = "32 GB";
-            case ConsoleKey.D: return value = "64 GB";
-            case ConsoleKey.E: return value = "128 GB";
+            case ConsoleKey.A: return memoryName = "8 GB";
+            case ConsoleKey.B: return memoryName = "16 GB";
+            case ConsoleKey.C: return memoryName = "32 GB";
+            case ConsoleKey.D: return memoryName = "64 GB";
+            case ConsoleKey.E: return memoryName = "128 GB";
+            default : Console.WriteLine("Enter a valid value"); return memoryName;
         }
-        if (value != "" || !required)
-            return value;
-
-
-        Console.WriteLine("Please select an option.");
     };
 }
 
-string primaryStorageChoice( string message, bool required)
+string primaryStorageChoice( string message)
 {
+    Console.WriteLine("");
     Console.WriteLine(message);
     Console.WriteLine("A) SSD 256 GB ($90)");
     Console.WriteLine("B) SSD 512 GB ($100)");
@@ -287,18 +349,15 @@ string primaryStorageChoice( string message, bool required)
             case ConsoleKey.B: return value = "SSD 512 GB";
             case ConsoleKey.C: return value = "SSD 1 TB";
             case ConsoleKey.D: return value = "SSD 2 TB";
+            default: Console.WriteLine("Enter a valid value"); return value;
         }
-        if (value != "" || !required)
-            return value;
-
-
-        Console.WriteLine("Please select an option.");
-    }
+    };
 
 } 
 
-string secondaryStorageChoice( string message, bool required)
+string secondaryStorageChoice( string message)
     {
+        Console.WriteLine("");
         Console.WriteLine(message);
         Console.WriteLine("A) None ($0)");
         Console.WriteLine("B) HDD 1 TB ($40)");
@@ -322,17 +381,14 @@ string secondaryStorageChoice( string message, bool required)
                 case ConsoleKey.E: return value = "SSD 512 GB";
                 case ConsoleKey.F: return value = "SSD 1 TB";
                 case ConsoleKey.G: return value = "SSD 2 TB";
+                default: Console.WriteLine("Enter a valid value"); return value;
             }
-            if (value != "" || !required)
-                return value;
-
-
-            Console.WriteLine("Please select an option.");
         }
     }
 
-string graphicsChoice ( string message, bool required )
+string graphicsChoice ( string message)
 {
+    Console.WriteLine("");
     Console.WriteLine(message);
     Console.WriteLine("A) None ($0)");
     Console.WriteLine("B) GeForce RTX 3070 ($580)");
@@ -352,17 +408,14 @@ string graphicsChoice ( string message, bool required )
             case ConsoleKey.C: return value = "GeForce RTX 2070";
             case ConsoleKey.D: return value = "Radeon RX 6600";
             case ConsoleKey.E: return value = "Radeon RX 5600";
+            default: Console.WriteLine("Enter a valid value"); return value;
         }
-        if (value != "" || !required)
-            return value;
-
-
-        Console.WriteLine("Please select an option.");
     }
 }
 
-string osChoice ( string message, bool required )
+string osChoice ( string message)
 {
+    Console.WriteLine("");
     Console.WriteLine(message);
     Console.WriteLine("A) Windows 11 Home ($140)");
     Console.WriteLine("B) Windows 11 Pro ($110)");
@@ -384,16 +437,12 @@ string osChoice ( string message, bool required )
             case ConsoleKey.D: return value = "Windows 10 Pro";
             case ConsoleKey.E: return value = "Linux (Fedora)";
             case ConsoleKey.F: return value = "Linux (Red Hat)";
+            default: Console.WriteLine("Enter a valid value"); return value;
         }
-        if (value != "" || !required)
-            return value;
-
-
-        Console.WriteLine("Please select an option.");
     }
 }
 
-int RunningPrice (int calculatedPrice)
+int RunningPrice ()
 {
     if (processorName == "AMD Ryzen 9 5900X")
         processorValue = 1410;
@@ -454,18 +503,18 @@ int RunningPrice (int calculatedPrice)
     else if (graphicsName == "Radeon RX 5600")
         graphicsValue = 325;
 
-    if (processorName == "Windows 11 Home")
-        processorValue = 140;
-    else if (processorName == "Windows 11 Pro")
-        processorValue = 160;
-    else if (processorName == "Windows 10 Home")
-        processorValue = 150;
-    else if (processorName == "Windows 10 Pro")
-        processorValue = 170;
-    else if (processorName == "Linux (Fedora)")
-        processorValue = 20;
-    else if (processorName == "Linux (Red Hat)")
-        processorValue = 60;
+    if (osName == "Windows 11 Home")
+        osValue = 140;
+    else if (osName == "Windows 11 Pro")
+        osValue = 160;
+    else if (osName == "Windows 10 Home")
+        osValue = 150;
+    else if (osName == "Windows 10 Pro")
+        osValue = 170;
+    else if (osName == "Linux (Fedora)")
+        osValue = 20;
+    else if (osName == "Linux (Red Hat)")
+        osValue = 60;
 
     price = processorValue + memoryValue + primaryStorageValue + secondaryStorageValue + graphicsValue + osValue;
     return price;
