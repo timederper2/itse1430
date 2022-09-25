@@ -17,8 +17,8 @@ string processorName = "";
 string memoryName = "";
 
 var done = false;
+
 bool isOrder = false;
-bool isEdit = false;
 
 do
 {
