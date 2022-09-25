@@ -1,5 +1,6 @@
 ﻿
 DisplayInformation();
+
 int price = 0;
 int processorValue = 0;
 int memoryValue = 0;
@@ -7,14 +8,17 @@ int primaryStorageValue = 0;
 int secondaryStorageValue = 0;
 int graphicsValue = 0;
 int osValue = 0;
+
 string primaryStorageName = "";
 string secondaryStorageName = "";
 string graphicsName = "";
 string osName = "";
 string processorName = "";
 string memoryName = "";
+
 var done = false;
 bool isOrder = false;
+bool isEdit = false;
 
 do
 {
@@ -44,6 +48,7 @@ void DisplayInformation ()
     Console.WriteLine("ITSE 1430");
     Console.WriteLine(thisDay.ToString());
 }
+
 bool QuitConfirmation (bool done)
 {
     Console.WriteLine("Are you sure you want to quit? (Y/N?)");
@@ -61,6 +66,7 @@ bool QuitConfirmation (bool done)
         }
     } while (loop);
 }
+
 void DisplayErrorMessage ()
 {
     Console.WriteLine("Sorry, try again!");
@@ -80,6 +86,7 @@ MenuOption DisplayMenu ()
     Console.WriteLine("E)dit Existing Order");
     Console.WriteLine("Q)uit");
     Console.WriteLine("Current Order Price: $" + price);
+
     do
     {
         ConsoleKeyInfo key = Console.ReadKey(true);
@@ -189,6 +196,7 @@ void ViewOrder()
         Console.WriteLine("No order available!");
         return;
     }
+
     Console.WriteLine("");
     Console.WriteLine("Processor: " + processorName + "  $" + processorValue);
     Console.WriteLine("Memory: " + memoryName + "  $" + memoryValue);
@@ -198,10 +206,12 @@ void ViewOrder()
     Console.WriteLine("Operating System: " + osName + "  $" + osValue);
     Console.WriteLine("");
 }
+
 void ClearOrder()
 {
-    if (processorName == "" || isOrder || false)
+    if (processorName == "" || isOrder == false)
         return;
+
     if (ReadBoolean("Are you sure you want to delete this movie (Y/N)? "))
     {
         processorName = "";
@@ -220,42 +230,72 @@ void EditOrder ()
         Console.WriteLine("No order detected!");
         return;
     }
+
     bool isTrue = true;
-    Console.WriteLine("Currently Selected Processor: " + processorName);
-    Console.WriteLine("Currently Selected Memory: " + memoryName);
-    Console.WriteLine("Currently Selected Primary Storage (Hard Drive): " + primaryStorageName);
-    Console.WriteLine("Currently Selected Secondary Storage: " + secondaryStorageName);
-    Console.WriteLine("Currently Selected Graphics Card: " + graphicsName);
-    Console.WriteLine("Currently Selected Operating System: " + osName);
-    Console.WriteLine("");
-    Console.WriteLine("Select order elements to modify: ");
-    Console.WriteLine("P)rocessor");
-    Console.WriteLine("M)emory");
-    Console.WriteLine("H)ard Drive");
-    Console.WriteLine("S)econdary Memory");
-    Console.WriteLine("G)raphics Card");
-    Console.WriteLine("O)perating System");
-    Console.WriteLine("N)othing");
+    char editSelection = ' ';
 
-    ConsoleKeyInfo key = Console.ReadKey(true);
-
-   while (isTrue)
+    do
     {
+        Console.WriteLine("Currently Selected Processor: " + processorName);
+        Console.WriteLine("Currently Selected Memory: " + memoryName);
+        Console.WriteLine("Currently Selected Primary Storage (Hard Drive): " + primaryStorageName);
+        Console.WriteLine("Currently Selected Secondary Storage: " + secondaryStorageName);
+        Console.WriteLine("Currently Selected Graphics Card: " + graphicsName);
+        Console.WriteLine("Currently Selected Operating System: " + osName);
+        Console.WriteLine("");
+        Console.WriteLine("Select order elements to modify: ");
+        Console.WriteLine("P)rocessor");
+        Console.WriteLine("M)emory");
+        Console.WriteLine("H)ard Drive");
+        Console.WriteLine("S)econdary Memory");
+        Console.WriteLine("G)raphics Card");
+        Console.WriteLine("O)perating System");
+        Console.WriteLine("N)othing");
+        Console.WriteLine("(Type the letter of the menu item requested, then press Enter)");
 
-        switch (key.Key)
+        editSelection = Console.ReadLine()[0];
+
+        if (editSelection == 'P' || editSelection == 'p')
         {
-            case ConsoleKey.P: processorChoice("Select new processor: "); return;
-            case ConsoleKey.M: memoryChoice ("Select new memory: "); return;
-            case ConsoleKey.H: primaryStorageChoice("Select new hard drive: "); return;
-            case ConsoleKey.S: secondaryStorageChoice("Select new backup drive: "); return;
-            case ConsoleKey.G: graphicsChoice("Select new graphics card: "); return;
-            case ConsoleKey.O: osChoice("Select new operating system: "); return;
-            case ConsoleKey.N: return ;
-         
+            processorChoice("Select new processor: ");
+        } 
+        
+        else if (editSelection == 'M' || editSelection == 'm')
+        {
+            memoryChoice("Select new memory: ");
+        } 
+        
+        else if (editSelection == 'H' || editSelection == 'h')
+        {
+            primaryStorageChoice("Select new hard drive: ");
+        } 
+        
+        else if (editSelection == 'S' || editSelection == 's')
+        {
+            secondaryStorageChoice("Select new backup drive: ");
+        } 
+        
+        else if (editSelection == 'G' || editSelection == 'g')
+        {
+            graphicsChoice("Select new graphics card: ");
+        } 
+        
+        else if (editSelection == 'O' || editSelection == 'o')
+        {
+            osChoice("Select new operating system: ");
+        } 
+        
+        else if (editSelection == 'N' || editSelection == 'n')
+        {
+            return;
         }
 
-    };
+        else
+        {
+            Console.WriteLine("Please enter a valid value!");
+        }
 
+    } while (isTrue);
 
 }
 
@@ -277,6 +317,8 @@ string processorChoice ( string message)
 {
     price = 0;
     isOrder = true;
+    processorName = "";
+
     Console.WriteLine("");
     Console.WriteLine(message);
     Console.WriteLine("A) AMD Ryzen 9 5900X ($1410)");
@@ -292,12 +334,12 @@ string processorChoice ( string message)
     {
         switch (key.Key)
         {
-            case ConsoleKey.A: return processorName = "AMD Ryzen 9 5900X";
-            case ConsoleKey.B: return processorName = "AMD Ryzen 7 5700X";
-            case ConsoleKey.C: return processorName = "AMD Ryzen 5 5600X";
-            case ConsoleKey.D: return processorName = "Intel i9-12900K";
-            case ConsoleKey.E: return processorName = "Intel i7-12700K";
-            case ConsoleKey.F: return processorName = "Intel i5-12600K";
+            case ConsoleKey.A: processorName = "AMD Ryzen 9 5900X"; return processorName;
+            case ConsoleKey.B: processorName = "AMD Ryzen 7 5700X"; return processorName;
+            case ConsoleKey.C: processorName = "AMD Ryzen 5 5600X"; return processorName;
+            case ConsoleKey.D: processorName = "Intel i9-12900K"; return processorName;
+            case ConsoleKey.E: processorName = "Intel i7-12700K"; return processorName;
+            case ConsoleKey.F: processorName = "Intel i5-12600K"; return processorName;
             default: Console.WriteLine("Enter a valid value"); return processorName;
         }
     };
@@ -305,6 +347,8 @@ string processorChoice ( string message)
 
 string memoryChoice ( string message)
 {
+    memoryName = "";
+
     Console.WriteLine("");
     Console.WriteLine(message);
     Console.WriteLine("A) 8 GB ($30)");
@@ -319,11 +363,11 @@ string memoryChoice ( string message)
     {
         switch (key.Key)
         {
-            case ConsoleKey.A: return memoryName = "8 GB";
-            case ConsoleKey.B: return memoryName = "16 GB";
-            case ConsoleKey.C: return memoryName = "32 GB";
-            case ConsoleKey.D: return memoryName = "64 GB";
-            case ConsoleKey.E: return memoryName = "128 GB";
+            case ConsoleKey.A: memoryName = "8 GB"; return memoryName;
+            case ConsoleKey.B: memoryName = "16 GB"; return memoryName;
+            case ConsoleKey.C: memoryName = "32 GB"; return memoryName; 
+            case ConsoleKey.D: memoryName = "64 GB"; return memoryName;
+            case ConsoleKey.E: memoryName = "128 GB"; return memoryName;
             default : Console.WriteLine("Enter a valid value"); return memoryName;
         }
     };
@@ -331,6 +375,8 @@ string memoryChoice ( string message)
 
 string primaryStorageChoice( string message)
 {
+    primaryStorageName = "";
+
     Console.WriteLine("");
     Console.WriteLine(message);
     Console.WriteLine("A) SSD 256 GB ($90)");
@@ -342,52 +388,55 @@ string primaryStorageChoice( string message)
 
     while (true)
     {
-        string value = "";
         switch (key.Key)
         {
-            case ConsoleKey.A: return value = "SSD 256 GB";
-            case ConsoleKey.B: return value = "SSD 512 GB";
-            case ConsoleKey.C: return value = "SSD 1 TB";
-            case ConsoleKey.D: return value = "SSD 2 TB";
-            default: Console.WriteLine("Enter a valid value"); return value;
+            case ConsoleKey.A: primaryStorageName = "SSD 256 GB"; return primaryStorageName;
+            case ConsoleKey.B: primaryStorageName = "SSD 512 GB"; return primaryStorageName;
+            case ConsoleKey.C: primaryStorageName = "SSD 1 TB"; return primaryStorageName;
+            case ConsoleKey.D: primaryStorageName = "SSD 2 TB"; return primaryStorageName;
+            default: Console.WriteLine("Enter a valid value"); return primaryStorageName;
         }
     };
 
 } 
 
 string secondaryStorageChoice( string message)
-    {
-        Console.WriteLine("");
-        Console.WriteLine(message);
-        Console.WriteLine("A) None ($0)");
-        Console.WriteLine("B) HDD 1 TB ($40)");
-        Console.WriteLine("C) HDD 2 TB ($50)");
-        Console.WriteLine("D) HDD 4 TB ($70)");
-        Console.WriteLine("E) SSD 512 GB ($100)");
-        Console.WriteLine("F) SSD 1 TB ($125)");
-        Console.WriteLine("G) SSD 2 TB ($230)");
+{
 
-        ConsoleKeyInfo key = Console.ReadKey(true);
+   secondaryStorageName = "";
 
-        while (true)
-        {
-            string value = "";
-            switch (key.Key)
-            {
-                case ConsoleKey.A: return value = "None";
-                case ConsoleKey.B: return value = "HDD 1 TB";
-                case ConsoleKey.C: return value = "HDD 2 TB";
-                case ConsoleKey.D: return value = "HDD 4 TB";
-                case ConsoleKey.E: return value = "SSD 512 GB";
-                case ConsoleKey.F: return value = "SSD 1 TB";
-                case ConsoleKey.G: return value = "SSD 2 TB";
-                default: Console.WriteLine("Enter a valid value"); return value;
-            }
-        }
-    }
+   Console.WriteLine("");
+   Console.WriteLine(message);
+   Console.WriteLine("A) None ($0)");
+   Console.WriteLine("B) HDD 1 TB ($40)");
+   Console.WriteLine("C) HDD 2 TB ($50)");
+   Console.WriteLine("D) HDD 4 TB ($70)");
+   Console.WriteLine("E) SSD 512 GB ($100)");
+   Console.WriteLine("F) SSD 1 TB ($125)");
+   Console.WriteLine("G) SSD 2 TB ($230)");
+
+   ConsoleKeyInfo key = Console.ReadKey(true);
+
+   while (true)
+   {
+       switch (key.Key)
+       {
+           case ConsoleKey.A: secondaryStorageName = "None"; return secondaryStorageName;
+           case ConsoleKey.B: secondaryStorageName = "HDD 1 TB"; return secondaryStorageName;
+           case ConsoleKey.C: secondaryStorageName = "HDD 2 TB"; return secondaryStorageName;
+           case ConsoleKey.D: secondaryStorageName = "HDD 4 TB"; return secondaryStorageName;
+           case ConsoleKey.E: secondaryStorageName = "SSD 512 GB"; return secondaryStorageName;
+           case ConsoleKey.F: secondaryStorageName = "SSD 1 TB"; return secondaryStorageName;
+           case ConsoleKey.G: secondaryStorageName = "SSD 2 TB"; return secondaryStorageName;
+           default: Console.WriteLine("Enter a valid value"); return secondaryStorageName;
+       }
+   }
+}
 
 string graphicsChoice ( string message)
 {
+    graphicsName = "";
+
     Console.WriteLine("");
     Console.WriteLine(message);
     Console.WriteLine("A) None ($0)");
@@ -400,21 +449,22 @@ string graphicsChoice ( string message)
 
     while (true)
     {
-        string value = "";
         switch (key.Key)
         {
-            case ConsoleKey.A: return value = "None";
-            case ConsoleKey.B: return value = "GeForce RTX 3070";
-            case ConsoleKey.C: return value = "GeForce RTX 2070";
-            case ConsoleKey.D: return value = "Radeon RX 6600";
-            case ConsoleKey.E: return value = "Radeon RX 5600";
-            default: Console.WriteLine("Enter a valid value"); return value;
+            case ConsoleKey.A: graphicsName = "None"; return graphicsName;
+            case ConsoleKey.B: graphicsName = "GeForce RTX 3070"; return graphicsName;
+            case ConsoleKey.C: graphicsName = "GeForce RTX 2070"; return graphicsName;
+            case ConsoleKey.D: graphicsName = "Radeon RX 6600"; return graphicsName;
+            case ConsoleKey.E: graphicsName = "Radeon RX 5600"; return graphicsName;
+            default: Console.WriteLine("Enter a valid value"); return graphicsName;
         }
     }
 }
 
 string osChoice ( string message)
 {
+    osName = "";
+
     Console.WriteLine("");
     Console.WriteLine(message);
     Console.WriteLine("A) Windows 11 Home ($140)");
@@ -428,16 +478,15 @@ string osChoice ( string message)
 
     while (true)
     {
-        string value = "";
         switch (key.Key)
         {
-            case ConsoleKey.A: return value = "Windows 11 Home";
-            case ConsoleKey.B: return value = "Windows 11 Pro";
-            case ConsoleKey.C: return value = "Windows 10 Home";
-            case ConsoleKey.D: return value = "Windows 10 Pro";
-            case ConsoleKey.E: return value = "Linux (Fedora)";
-            case ConsoleKey.F: return value = "Linux (Red Hat)";
-            default: Console.WriteLine("Enter a valid value"); return value;
+            case ConsoleKey.A: osName = "Windows 11 Home"; return osName;
+            case ConsoleKey.B: osName = "Windows 11 Pro"; return osName;
+            case ConsoleKey.C: osName = "Windows 10 Home"; return osName;
+            case ConsoleKey.D: osName = "Windows 10 Pro"; return osName;
+            case ConsoleKey.E: osName = "Linux (Fedora)"; return osName;
+            case ConsoleKey.F: osName = "Linux (Red Hat)"; return osName;
+            default: Console.WriteLine("Enter a valid value"); return osName;
         }
     }
 }
