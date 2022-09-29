@@ -3,6 +3,11 @@
     /// <summary>Represents a movie.</summary>
     public class Movie
     {
+        public Movie ( string title)
+        {
+            //Init that field initializers cannot do
+            Title = title;
+        }
         public int Id { get; private set; }
         public string Title
         {
@@ -100,7 +105,7 @@
         /// <returns>A copy of the movie.</returns>
         public Movie Clone ()
         {
-            var movie = new Movie();
+            var movie = new Movie("Title");
             CopyTo(movie);
 
             return movie;

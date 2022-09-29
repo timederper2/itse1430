@@ -173,7 +173,7 @@ Movie AddMovie ()
         Console.WriteLine("Wow, that's an old movie!");
     }
 
-    var empty
+    //var empty
 
     movie.Rating = ReadString("Entering MPAA rating: ", true);
 
