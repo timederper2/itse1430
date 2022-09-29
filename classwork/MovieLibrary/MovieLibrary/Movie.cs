@@ -85,9 +85,16 @@
 
         public bool IsBlackAndWhite
         {
-            get { return ReleaseYear < 1939; }
+            get { return ReleaseYear < YearColorWasIntroduced; }
             //set { }
         }
+
+        //Public Fields are allowed when they are constants or readonly
+        public const int YearColorWasIntroduced = 1939;
+        //public readonly Movie Empty = new Movie();
+
+        //private Movie EmptyMovie { get; } = new Movie();
+        //private readonly Movie _emptyMovie = new Movie();
 
         /// <summary>Clones the existing movie.</summary>
         /// <returns>A copy of the movie.</returns>
@@ -111,6 +118,12 @@
             movie.ReleaseYear = ReleaseYear;
             movie.Rating = Rating;
             movie.IsClassic = IsClassic;
+        }
+        //Equals & GetHashCode
+        //GetType
+        public override string ToString()
+        {
+            return Title;
         }
     }
 }

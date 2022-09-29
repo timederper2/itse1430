@@ -8,8 +8,9 @@ using MovieLibrary;
 DisplayInformation();
 
 Movie movie = null;
-//bool done = false;
-var done = false;
+MovieDatabase database = new MovieDatabase();
+
+var done = false; //bool done = false;
 do
 {
     //Type inferencing - compiler figures out type based upon context
@@ -167,6 +168,13 @@ Movie AddMovie ()
     movie.RunLength = ReadInt32("Enter a run length (in minutes): ", 0, 300);
 
     movie.ReleaseYear = ReadInt32("Enter the release year: ", 1900, 2100);
+    if (movie.ReleaseYear >= Movie.YearColorWasIntroduced)
+    {
+        Console.WriteLine("Wow, that's an old movie!");
+    }
+
+    var empty
+
     movie.Rating = ReadString("Entering MPAA rating: ", true);
 
     movie.IsClassic = ReadBoolean("Is this a classic? ");
@@ -177,6 +185,13 @@ Movie AddMovie ()
 Movie GetSelectedMovie ()
 {
     //HACK: For now
+    var item = database.Get(0);
+
+    //object obj = "Hello";
+    //obj = 10;
+    //obj = 4.15;
+    //obj.ToString();
+
     return movie;
 }
 
