@@ -1,27 +1,66 @@
-﻿namespace MovieLibrary
+﻿
+namespace MovieLibrary
 {
     /// <summary>Represents a movie.</summary>
     public class Movie
     {
-        public Movie ( string title)
+        //Constructors
+        // Used to do complex init outside what field init can do
+        // Historically used to set common properties but not anymore
+        // Can be used to init required properties that cannot be set
+        // Readonly fields can be written in ctors
+        //
+        //ctor-decl :: [access] T ( parameters ) { S* }
+        //Default constructor - auto created unless you define your own constructors
+        public Movie () : this("", "")
+        {
+            //Initialize("", "");
+        }
+
+        //Constructor chaining
+        // Allows for calling another constructor on same type
+        // Eliminates the need for private initialize functions (dangerous)
+        // Can chain indefinitely
+        public Movie ( string title ) : this(title, "")
         {
             //Init that field initializers cannot do
-            Title = title;
+            //Title = title;
+            //Initialize(title, "");
         }
+
+        public Movie ( string title, string description )
+        {
+            //Initialize(title, description);
+
+            Title = title;
+            Description = description;
+        }
+
+        //Don't do this
+        //private void Initialize ( string title, string description )
+        //{
+        //    Title = title;
+        //    Description = description;
+        //}
+
+        /// <summary>Gets the unique ID.</summary>
         public int Id { get; private set; }
+
+        /// <summary>Gets or sets the title.</summary>
         public string Title
         {
-            //string get_Title ()
+            // string get_Title () 
             get 
             {
-                return String.IsNullOrEmpty(_title) ? "" : _title;
-            } //for reading
+                //return String.IsNullOrEmpty(_title) ? "" : _title;
+                return _title ?? "";
+            }
 
             // void set_Title ( string value )
-            set { _title = String.IsNullOrEmpty(value) ? "" : value.Trim(); } //for writing
+            set { _title = String.IsNullOrEmpty(value) ? "" : value.Trim(); }
         }
-        private string _title = "";
-
+        private string _title;
+        
         //public string GetTitle ()
         //{
         //    return _title;
@@ -33,79 +72,67 @@
         //    _title = title;
         //}
 
+        /// <summary>Gets or sets the description.</summary>
         public string Description
         {
-            get { return String.IsNullOrEmpty(_description) ? "" : _description; }
+            //get { return String.IsNullOrEmpty(_description) ? "" : _description; }
+            get { return _description ?? ""; }
             set { _description = String.IsNullOrEmpty(value) ? "" : value.Trim(); }
         }
-        private string _description = "";
+        private string _description;
 
-        /// <summary>
-        /// Gets or sets the run length in minutes
-        /// </summary>
+        /// <summary>Gets or sets the run length in minutes.</summary>
         //public int RunLength
         //{
         //    get { return _runLength; }
         //    set { _runLength = value; }
         //}
         //private int _runLength = 0; //in minutes
-        //Auto property syntax
-        public int RunLength
-        {
-            get;
-            set;
-        }
+        //Auto property
+        public int RunLength { get; set; }
 
+        /// <summary>Gets or sets the release year.</summary>
+        /// <value>Default is 1900.</value>
         //public int ReleaseYear
         //{
         //    get { return _releaseYear; }
         //    set { _releaseYear = value; }
         //}
         //private int _releaseYear = 1900;
+        public int ReleaseYear { get; set; } = 1900;
 
-        public int ReleaseYear
-        {
-            get;
-            set;
-        }
-
+        /// <summary>Gets or sets the MPAA rating.</summary>
         public string Rating
         {
-            get { return String.IsNullOrEmpty(_rating) ? "" : _rating; }
+            //get { return String.IsNullOrEmpty(_rating) ? "" : _rating; }
+            get { return _rating ?? ""; }
             set { _rating = String.IsNullOrEmpty(value) ? "" : value.Trim(); }
         }
-        private string _rating = "";
+        private string _rating;
 
-        public bool IsClassic
-        {
-            get;
-            set;
-        }
+        /// <summary>Determines if the movie is a classic.</summary>
+        public bool IsClassic { get; set; }
 
-
-        //public bool IsBlackAndWhite ()
-        //{
-        //    return _releaseYear < 1939;
-        //}
-
+        /// <summary>Determines if the movie is black and white.</summary>
+        //public bool IsBlackAndWhite () { return _releaseYear < 1939; }
         public bool IsBlackAndWhite
         {
             get { return ReleaseYear < YearColorWasIntroduced; }
             //set { }
         }
 
-        //Public Fields are allowed when they are constants or readonly
+        //Public fields are allowed when they are constants
         public const int YearColorWasIntroduced = 1939;
         //public readonly Movie Empty = new Movie();
 
         //private Movie EmptyMovie { get; } = new Movie();
-        //private readonly Movie _emptyMovie = new Movie();
+        //private readonly Movie _emptyMovie= new Movie();
 
         /// <summary>Clones the existing movie.</summary>
         /// <returns>A copy of the movie.</returns>
         public Movie Clone ()
         {
-            var movie = new Movie("Title");
+            var movie = new Movie();
             CopyTo(movie);
 
             return movie;
@@ -123,11 +150,16 @@
             movie.ReleaseYear = ReleaseYear;
             movie.Rating = Rating;
             movie.IsClassic = IsClassic;
+
         }
+
         //Equals & GetHashCode
         //GetType
-        public override string ToString()
+        public override string ToString ()
         {
+
+            //ToString == this.ToString();
+            var str = base.ToString(); //calls base type impl
             return Title;
         }
     }

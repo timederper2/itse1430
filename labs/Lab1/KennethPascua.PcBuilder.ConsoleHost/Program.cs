@@ -1,4 +1,7 @@
-﻿
+﻿// ITSE 1430
+// Kenneth V. Pascua
+// Fall 2022
+
 DisplayInformation();
 
 int price = 0;

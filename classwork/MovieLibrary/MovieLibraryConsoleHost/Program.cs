@@ -1,21 +1,15 @@
-﻿//Movie definition
-using MovieLibrary;
-
-//Movie movie = new Movie();
-//movie.title = "Jaws";
-//movie.releaseYear = 1977;
+﻿using MovieLibrary;
 
 DisplayInformation();
 
 Movie movie = null;
 MovieDatabase database = new MovieDatabase();
 
-var done = false; //bool done = false;
+var done = false;  //bool done = false;
 do
 {
-    //Type inferencing - compiler figures out type based upon context
-    //MenuOption input = DisplayMenu();
-    var input = DisplayMenu();
+    //Type inferencing - compiler figures out type based upon context    
+    var input = DisplayMenu();   //MenuOption input = DisplayMenu();
     Console.WriteLine();
     switch (input)
     {
@@ -122,6 +116,9 @@ int ReadInt32 ( string message, int minimumValue, int maximumValue )
                 return result;
         };
 
+        //Int32.MinValue;
+        //Int32.MaxValue;
+
         //if (false)
         //break;  //Exit loop
         //continue; //Exit iteration
@@ -151,7 +148,9 @@ string ReadString ( string message, bool required )
 //TODO: Fix return
 Movie AddMovie ()
 {
-    Movie movie = new Movie();
+    Movie movie = new Movie("Title");
+    //movie = new Movie();
+    //movie.Title = "Title";
 
     //string title = "";
     //movie.title = ReadString("Enter a title: ", true);
@@ -169,12 +168,9 @@ Movie AddMovie ()
 
     movie.ReleaseYear = ReadInt32("Enter the release year: ", 1900, 2100);
     if (movie.ReleaseYear >= Movie.YearColorWasIntroduced)
-    {
-        Console.WriteLine("Wow, that's an old movie!");
-    }
+        Console.WriteLine("Wow that is an old movie");
 
-    //var empty
-
+    //var emptyMovie = Movie.Empty.Title;    
     movie.Rating = ReadString("Entering MPAA rating: ", true);
 
     movie.IsClassic = ReadBoolean("Is this a classic? ");
@@ -234,7 +230,7 @@ void ViewMovie ( Movie movie )
     //string someValue = $"Length = {runLength}";
 
     //ToString
-    //Console.WriteLine($"{movie.title} ({movie._releaseYear})");
+    //Console.WriteLine($"{movie.title} ({movie.ReleaseYear})");
     Console.WriteLine($"{movie.Title} ({movie.ReleaseYear})");
     //Console.WriteLine(releaseYear);
     //Console.WriteLine(releaseYear.ToString());
@@ -250,4 +246,61 @@ void ViewMovie ( Movie movie )
     Console.WriteLine(movie.Description);
 
     var blackAndWhite = movie.IsBlackAndWhite;
+    //movie.IsBlackAndWhite = true;
+}
+
+void DisplayObject (object sender)
+{
+    //Type Checking
+    // 1. C-Style cast (T)E
+    //    Blows up at runtime if it fails
+    string str = (string)sender;
+    //str = (string)intValue;
+
+    // 2. Type checking using is ::= E is T
+    //    True is valid or false otherwise
+    //    Not valid on primitives (other than string)
+    if (sender is string)
+    {
+        // Do something
+        str = (string)sender;
+    };
+
+    // 3. Safe type cast using as ::= E as T
+    //    Converts to T if valid or null otherwise
+    //    Doesn't work with primitives (except string)
+    str = sender as string;
+    if (str != null)
+    {
+
+    };
+
+    // 4. Pattern Matching ::= E is T id
+    //    Assigns typed E to id and returns true
+    //    Works with any type
+    if (sender is string str1)
+    {
+
+    };
+
+    // 5. Convert.ChangeType - DON'T USE THIS
+    //           .ToInt32() - DON'T USE THIS
+
+    // Null
+    //    Default value for class types
+    //    Member access crashes if instance is null
+    //str.ToString();
+    if (str != null)
+    {
+        var str2 = str.ToString();
+    }
+    var str3 = (str != null) ? str.ToString() : "";
+
+    // 3. Null coalescing ::= E ?? E
+    str3 = str ?? ""; // str ?? str2 ?? str3 ?? "";
+
+    // 4. Null conditional ::= instance?.member
+    //       (str != null) ? str.ToString() : null;
+
+    str3 = str?.ToString();
 }
