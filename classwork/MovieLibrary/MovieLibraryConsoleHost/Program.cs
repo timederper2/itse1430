@@ -301,6 +301,12 @@ void DisplayObject (object sender)
 
     // 4. Null conditional ::= instance?.member
     //       (str != null) ? str.ToString() : null;
-
     str3 = str?.ToString();
+
+    Movie m1 = new Movie(), m2 = new Movie();
+    var areEqual = m1 == m2;
+
+    //Point pt1 = new Point(10,10);
+    //Point pt2 = new Point(10,10);
+    //areEqual = pt1 == pt2;
 }

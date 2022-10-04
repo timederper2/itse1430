@@ -57,7 +57,8 @@ namespace MovieLibrary
             }
 
             // void set_Title ( string value )
-            set { _title = String.IsNullOrEmpty(value) ? "" : value.Trim(); }
+            //set { _title = String.IsNullOrEmpty(value) ? "" : value.Trim(); }
+            set { _title = value?.Trim(); }
         }
         private string _title;
         
@@ -77,7 +78,8 @@ namespace MovieLibrary
         {
             //get { return String.IsNullOrEmpty(_description) ? "" : _description; }
             get { return _description ?? ""; }
-            set { _description = String.IsNullOrEmpty(value) ? "" : value.Trim(); }
+            //set { _description = String.IsNullOrEmpty(value) ? "" : value.Trim(); }
+            set { _description = value?.Trim() ?? ""; }
         }
         private string _description;
 
@@ -106,7 +108,8 @@ namespace MovieLibrary
         {
             //get { return String.IsNullOrEmpty(_rating) ? "" : _rating; }
             get { return _rating ?? ""; }
-            set { _rating = String.IsNullOrEmpty(value) ? "" : value.Trim(); }
+            //set { _rating = String.IsNullOrEmpty(value) ? "" : value.Trim(); }
+            set { _rating = value?.Trim() ?? ""; }
         }
         private string _rating;
 
