@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
+
 namespace MovieLibrary.WinHost
 {
     partial class MainForm
@@ -96,6 +98,7 @@ namespace MovieLibrary.WinHost
             this._miMovieEdit.Name = "_miMovieEdit";
             this._miMovieEdit.Size = new System.Drawing.Size(180, 22);
             this._miMovieEdit.Text = "&Edit";
+            this._miMovieEdit.Click += new System.EventHandler(this.OnMovieEdit);
             // 
             // _miMovieDelete
             // 
@@ -103,7 +106,7 @@ namespace MovieLibrary.WinHost
             this._miMovieDelete.ShortcutKeys = System.Windows.Forms.Keys.Delete;
             this._miMovieDelete.Size = new System.Drawing.Size(180, 22);
             this._miMovieDelete.Text = "&Delete";
-            this._miMovieDelete.Click += new System.EventHandler(this._miMovieDelete_Click);
+            this._miMovieDelete.Click += new System.EventHandler(this.OnMovieDelete);
             // 
             // helpToolStripMenuItem
             // 
