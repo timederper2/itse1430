@@ -10,7 +10,6 @@ Character character = null;
 CharacterDatabase database = new CharacterDatabase();
 
 bool quitDone = false;
-bool clearDone = false;
 
 DisplayInformation();
 
