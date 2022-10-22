@@ -63,7 +63,7 @@ namespace KennethPascua.CharacterCreator
             return character;
         }
 
-        public void CopyTo (Character character)
+        public void CopyTo ( Character character )
         {
             character.Name = Name;
             character.Class = Class;
@@ -75,10 +75,6 @@ namespace KennethPascua.CharacterCreator
             character.Constitution = Constitution;
             character.Charisma = Charisma;
         }
-
-        public const int MinimumAllowedAttribute = 1;
-        public const int MaximumAllowedAttribute = 100;
-
     } 
 }
 
