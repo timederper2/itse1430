@@ -56,7 +56,7 @@ bool QuitConfirmation (bool done)
 {
     Console.WriteLine("Are you sure you want to quit? (Y/N?)");
     ConsoleKeyInfo key = Console.ReadKey(true);
-    var loop = true;
+    bool loop;
 
     do
     {
