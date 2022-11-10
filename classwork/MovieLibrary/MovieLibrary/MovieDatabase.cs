@@ -14,10 +14,7 @@ namespace MovieLibrary
         {
             //Validate movie
             if (movie == null)
-            {
-                errorMessage = "Movie cannot be null";
-                return null;
-            };
+                throw new ArgumentNullException(nameof(movie));
 
             //Use IValidatableObject Luke...
             if (!ObjectValidator.IsValid(movie, out errorMessage))
