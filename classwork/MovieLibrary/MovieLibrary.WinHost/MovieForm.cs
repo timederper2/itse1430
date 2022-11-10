@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
+
 namespace MovieLibrary.WinHost
 {
     public partial class MovieForm : Form
@@ -40,13 +42,18 @@ namespace MovieLibrary.WinHost
                 _txtReleaseYear.Text = SelectedMovie.ReleaseYear.ToString();
             };
 
+            //Force validation
+            ValidateChildren();
         }
 
         private void OnSave ( object sender, EventArgs e )
         {
+            //Force validation of children
+            if (!ValidateChildren())
+                return;
+
             var btn = sender as Button;
 
-            //TODO: Add validation
             var movie = new Movie();
             movie.Title = _txtTitle.Text;
             movie.Description = _txtDescription.Text;
@@ -56,7 +63,10 @@ namespace MovieLibrary.WinHost
             movie.RunLength = GetInt32(_txtRunLength);
             movie.ReleaseYear = GetInt32(_txtReleaseYear);
 
-            if (!movie.Validate(out var error))
+            //var validator = new ObjectValidator();            
+            //if (!movie.Validate(out var error))
+            //if (!new ObjectValidator().IsValid(movie, out var error))
+            if (!ObjectValidator.IsValid(movie, out var error))
             {
                 DisplayError(error, "Save");
                 return;
@@ -74,16 +84,87 @@ namespace MovieLibrary.WinHost
 
         private void DisplayError ( string message, string title )
         {
-            MessageBox.Show(message, title, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show(this, message, title, MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         private int GetInt32 ( TextBox control )
         {
+            //String.Compare("A", "B");
+            //"A".Compare("B");
+
+            //String.Format("Format string", 1, 2);
+            //"Format string".Format(1, 2);
+
             if (Int32.TryParse(control.Text, out var result))
                 return result;
 
             return -1;
         }
         #endregion
+
+        private void OnValidateTitle ( object sender, CancelEventArgs e )
+        {
+            var control = sender as TextBox;
+
+            if (String.IsNullOrEmpty(control.Text))
+            {
+                //Not valid
+                _errors.SetError(control, "Title is required");
+                e.Cancel = true;
+            } else
+            {
+                //Valid
+                _errors.SetError(control, "");
+            };
+        }
+
+        private void OnValidateRating ( object sender, CancelEventArgs e )
+        {
+            var control = sender as ComboBox;
+
+            if (String.IsNullOrEmpty(control.Text))
+            {
+                //Not valid
+                _errors.SetError(control, "Rating is required");
+                e.Cancel = true;
+            } else
+            {
+                //Valid
+                _errors.SetError(control, "");
+            };
+        }
+
+        private void OnValidateReleaseYear ( object sender, CancelEventArgs e )
+        {
+            var control = sender as TextBox;
+
+            var value = GetInt32(control);
+            if (value < 1900)
+            {
+                //Not valid
+                _errors.SetError(control, "Release Year must be at least 1900");
+                e.Cancel = true;
+            } else
+            {
+                //Valid
+                _errors.SetError(control, "");
+            };
+        }
+
+        private void OnValidateRunLength ( object sender, CancelEventArgs e )
+        {
+            var control = sender as TextBox;
+            var value = GetInt32(control);
+            if (value < 0)
+            {
+                //Not valid
+                _errors.SetError(control, "Run Length must be >= 0");
+                e.Cancel = true;
+            } else
+            {
+                //Valid
+                _errors.SetError(control, "");
+            };
+        }
     }
 }

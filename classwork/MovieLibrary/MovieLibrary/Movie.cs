@@ -1,44 +1,59 @@
-﻿namespace MovieLibrary
+﻿/*
+ * Name
+ * Lab
+ * Fall 2022
+ */
+using System.ComponentModel.DataAnnotations;
+
+namespace MovieLibrary
 {
     /// <summary>Represents a movie.</summary>
-    public class Movie
+    public class Movie : IValidatableObject
     {
+        #region Construction
+
+        /// <summary>Initializes an instance of the <see cref="Movie"/> class.</summary>
         public Movie () : this("", "")
         {
-            //Initialize("", "");
         }
 
+        /// <summary>Initializes an instance of the <see cref="Movie"/> class.</summary>
+        /// <param name="title">The title.</param>
         public Movie ( string title ) : this(title, "")
         {
-            //Init that field initializers cannot do
-            //Title = title;
-            //Initialize(title, "");
         }
 
+        /// <summary>Initializes an instance of the <see cref="Movie"/> class.</summary>
+        /// <param name="title">The title.</param>
+        /// <param name="description">The description.</param>
         public Movie ( string title, string description ) : base() // Object.ctor()
         {
-            //Initialize(title, description);
-
             Title = title;
             Description = description;
         }
+        #endregion
 
         /// <summary>Gets the unique ID.</summary>
-        public int Id { get; private set; }
+        public int Id { get; set; }
 
         /// <summary>Gets or sets the title.</summary>
         public string Title
         {
-            get { return _title ?? ""; }
-            set { _title = value?.Trim() ?? ""; }
+            //Expression body
+            //get { return _title ?? ""; }  
+            //set { _title = value?.Trim() ?? ""; }
+            get => _title ?? "";
+            set => _title = value?.Trim() ?? "";
         }
         private string _title;
 
         /// <summary>Gets or sets the description.</summary>
         public string Description
         {
-            get { return _description ?? ""; }
-            set { _description = value?.Trim() ?? ""; }
+            //get { return _description ?? ""; }
+            //set { _description = value?.Trim() ?? ""; }
+            get => _description ?? "";
+            set => _description = value?.Trim() ?? "";
         }
         private string _description;
 
@@ -62,10 +77,12 @@
 
         /// <summary>Determines if the movie is black and white.</summary>
         //public bool IsBlackAndWhite () { return _releaseYear < 1939; }
-        public bool IsBlackAndWhite
-        {
-            get { return ReleaseYear < YearColorWasIntroduced; }
-        }
+        public bool IsBlackAndWhite => ReleaseYear < YearColorWasIntroduced;
+        //public bool IsBlackAndWhite = ReleaseYear < YearColorWasIntroduced;
+        //{
+        //    //get { return ReleaseYear < YearColorWasIntroduced; }
+        //    get => ReleaseYear < YearColorWasIntroduced;
+        //}
 
         //Public fields are allowed when they are constants
         public const int YearColorWasIntroduced = 1939;
@@ -84,6 +101,7 @@
         /// <param name="movie">Movie to copy into.</param>
         public void CopyTo ( Movie movie )
         {
+            movie.Id = Id;
             movie.Title = Title;
             movie.Description = Description;
             movie.RunLength = RunLength;
@@ -92,36 +110,29 @@
             movie.IsClassic = IsClassic;
         }
 
-        public bool Validate ( out string errorMessage )
+        /// <inheritdoc />
+        public override string ToString () => Title;
+        //{            
+        //    return Title;
+        //}
+
+        public IEnumerable<ValidationResult> Validate ( ValidationContext validationContext )
         {
+            var errors = new List<ValidationResult>();
+
             if (Title.Length == 0)
-            {
-                errorMessage = "Title is required";
-                return false;
-            };
+                errors.Add(new ValidationResult("Title is required", new[] { nameof(Title) }));
+
             if (Rating.Length == 0)
-            {
-                errorMessage = "Rating is required";
-                return false;
-            };
+                errors.Add(new ValidationResult("Rating is required", new[] { nameof(Rating) }));
+
             if (RunLength <= 0)
-            {
-                errorMessage = "Run Length must be > 0";
-                return false;
-            };
+                errors.Add(new ValidationResult("Run Length must be > 0", new[] { nameof(RunLength) }));
+
             if (ReleaseYear < 1900)
-            {
-                errorMessage = "Release Year must be >= 1900";
-                return false;
-            };
+                errors.Add(new ValidationResult("Release Year must be >= 1900", new[] { nameof(ReleaseYear) }));
 
-            errorMessage = null;
-            return true;
-        }
-
-        public override string ToString ()
-        {
-            return Title;
+            return errors;
         }
     }
 }
