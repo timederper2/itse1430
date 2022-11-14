@@ -18,6 +18,16 @@ namespace ContactDatabase
             LastName = lastName;
             Email = email;
         }
+        public Contact ( int id, string firstName, string lastName, string email, string notes, bool isFavorite )
+        {
+            Id=id;
+            _firstName=firstName;
+            _lastName=lastName;
+            _email=email;
+            _notes=notes;
+            IsFavorite=isFavorite;
+        }
+
         public int Id { get; set; }
         public string FirstName
         {

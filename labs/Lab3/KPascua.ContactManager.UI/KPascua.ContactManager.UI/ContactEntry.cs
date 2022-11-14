@@ -9,7 +9,6 @@ namespace KPascua.ContactManager.UI
         {
             InitializeComponent();
         }
-
        
         public Contact SelectedContact { get; set; }
 
@@ -82,7 +81,7 @@ namespace KPascua.ContactManager.UI
 
         private void OnValidateEmail ( object sender, CancelEventArgs e )
         {
-            var control = sender as ComboBox;
+            var control = sender as TextBox;
 
             if (String.IsNullOrEmpty(control.Text))
             {

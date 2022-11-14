@@ -59,6 +59,7 @@
             this._txtLastName.Name = "_txtLastName";
             this._txtLastName.Size = new System.Drawing.Size(230, 23);
             this._txtLastName.TabIndex = 1;
+            this._txtLastName.Validating += new System.ComponentModel.CancelEventHandler(this.OnValidateLast);
             // 
             // _txtEmail
             // 
@@ -67,6 +68,7 @@
             this._txtEmail.Name = "_txtEmail";
             this._txtEmail.Size = new System.Drawing.Size(230, 23);
             this._txtEmail.TabIndex = 2;
+            this._txtEmail.Validating += new System.ComponentModel.CancelEventHandler(this.OnValidateEmail);
             // 
             // _txtNotes
             // 

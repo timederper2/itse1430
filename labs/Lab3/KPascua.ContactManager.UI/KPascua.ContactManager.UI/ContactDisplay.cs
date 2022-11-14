@@ -40,7 +40,7 @@ public partial class ContactDisplay : Form
     {
         base.OnLoad(e);
 
-        UpdateUI(false);
+        UpdateUI(true);
     }
 
     private void OnContactAdd ( object sender, EventArgs e )
@@ -113,7 +113,7 @@ public partial class ContactDisplay : Form
 
     private void UpdateUI ()
     {
-        UpdateUI(true);
+        UpdateUI(false);
     }
 
     private void UpdateUI ( bool initialLoad )
@@ -134,12 +134,13 @@ public partial class ContactDisplay : Form
         var items = contacts.OrderBy(x => x.LastName)
                           .ThenBy(x => x.FirstName)
                           .ToArray();
-      
-        for (int i = 0; i < items.Length; i++)
+
+        foreach (var contact in items)
         {
-            _lstContacts.Items.Add(items[i].LastName);
+            _lstContacts.Items.Add(contact);
+            contact.CopyTo(contact);
         }
-       
+        
     }
     
     private Contact GetSelectedContact ()
