@@ -18,7 +18,7 @@ namespace ContactDatabase
             FirstName = firstName;
             Notes = notes;
         }
-        public int Id { get; private set; }
+        public int Id { get; set; }
         public string FirstName
         {
             get => _firstName ?? "";

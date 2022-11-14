@@ -26,7 +26,6 @@ namespace KPascua.ContactManager.UI
             if (Confirm("Are you sure you want to leave?", "Close"))
                 return;
 
-            //Stop the event
             e.Cancel = true;
         }
 
@@ -42,18 +41,16 @@ namespace KPascua.ContactManager.UI
             UpdateUI(true);
         }
 
-        //Called to handle Movies\Add
-        private void OnMovieAdd ( object sender, EventArgs e )
+        private void OnContactAdd ( object sender, EventArgs e )
         {
             var child = new ContactEntry();
 
             do
             {
-                //Showing form modally
                 if (child.ShowDialog(this) != DialogResult.OK)
                     return;
 
-                if (_movies.Add(child.SelectedContact, out var error) != null)
+                if (_contacts.Add(child.SelectedContact, out var error) != null)
                 {
                     UpdateUI();
                     return;
@@ -63,34 +60,34 @@ namespace KPascua.ContactManager.UI
             } while (true);
         }
 
-        private void OnMovieDelete ( object sender, EventArgs e )
+        private void OnContactDelete ( object sender, EventArgs e )
         {
-            var movie = GetSelectedMovie();
+            var movie = GetSelectedContact();
             if (movie == null)
                 return;
 
-            if (!Confirm($"Are you sure you want to delete '{movie.Title}'?", "Delete"))
+            if (!Confirm($"Are you sure you want to delete '{contact.Title}'?", "Delete"))
                 return;
 
-            _movies.Remove(movie.Id);
+            _contacts.Remove(movie.Id);
             UpdateUI();
         }
 
         private void OnMovieEdit ( object sender, EventArgs e )
         {
-            var movie = GetSelectedMovie();
+            var movie = GetSelectedContact();
             if (movie == null)
                 return;
 
             var child = new ContactEntry();
-            child.SelectedMovie = movie;
+            child.SelectedContact = movie;
 
             do
             {
                 if (child.ShowDialog(this) != DialogResult.OK)
                     return;
 
-                if (_movies.Update(movie.Id, child.SelectedMovie, out var error))
+                if (_contacts.Update(contact.Id, child.SelectedMovie, out var error))
                 {
                     UpdateUI();
                     return;
@@ -119,7 +116,7 @@ namespace KPascua.ContactManager.UI
 
         private void UpdateUI ( bool initialLoad )
         {
-            var contacts = _movies.GetAll();
+            var contacts = _contacts.GetAll();
 
             //Extension methods - static methods on static classes
             // 1. Expose a static method as an instance method for discoverability
@@ -129,17 +126,17 @@ namespace KPascua.ContactManager.UI
             if (initialLoad &&
                     //movies.Count() == 0)
                     //movies.FirstOrDefault() == null)            
-                    movies.Any())
+                    contacts.Any())
             {
                 if (Confirm("Do you want to seed some movies?", "Database Empty"))
                 {
                     //SeedMovieDatabase.Seed(_movies);
-                    _movies.Seed();
-                    movies = _movies.GetAll();
+                    _contacts.Seed();
+                    contacts = _contacts.GetAll();
                 };
             };
 
-            _lstMovies.Items.Clear();
+            _lstContacts.Items.Clear();
 
             //Func<Movie, string> someFunc = OrderByTitle;
             //var someResult = someFunc(new Movie());
@@ -152,14 +149,14 @@ namespace KPascua.ContactManager.UI
             //      compare sortValue to other values
             //var items = movies.OrderBy(OrderByTitle)
             //               .ThenBy(OrderByReleaseYear)
-            var items = movies.OrderBy(x => x.Title)
+            var items = contacts.OrderBy(x => x.Title)
                               .ThenBy(x => x.ReleaseYear)
                               .ToArray();
             //movies = movies.ThenBy();
 
             //Use Enumerable 
             //_lstMovies.Items.AddRange(Enumerable.ToArray(movies));
-            _lstMovies.Items.AddRange(items);
+            _lstContacts.Items.AddRange(items);
             //foreach (var movie in movies)
             //    _lstMovies.Items.Add(movie);
         }
@@ -172,12 +169,12 @@ namespace KPascua.ContactManager.UI
         //    return movie.ReleaseYear;
         //}
 
-        private Movie GetSelectedMovie ()
+        private Contact GetSelectedMovie ()
         {
             //var allTextBoxes = Controls.OfType<TextBox>();
             //IEnumerable<Movie> temp = _lstMovies.SelectedItems.OfType<Movie>();
 
-            return _lstMovies.SelectedItem as Movie;
+            return _lstContacts.SelectedItem as Contact;
         }
 
         private bool Confirm ( string message, string title )
@@ -192,7 +189,6 @@ namespace KPascua.ContactManager.UI
             MessageBox.Show(this, message, title, MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
-        //private Movie _movie;
-        private IMovieDatabase _movies = new Memory.MemoryMovieDatabase();
+        private IContactDatabase _contacts = new Memory.MemoryMovieDatabase();
     }
 }
