@@ -113,7 +113,7 @@ public partial class ContactDisplay : Form
 
     private void UpdateUI ()
     {
-        UpdateUI(false);
+        UpdateUI(true);
     }
 
     private void UpdateUI ( bool initialLoad )
@@ -122,7 +122,7 @@ public partial class ContactDisplay : Form
 
         if (initialLoad && contacts.Any())
         {
-            if (Confirm("Do you want to seed some movies?", "Database Empty"))
+            if (Confirm("Do you want to seed some contacts?", "Database Empty"))
             {
                 _contacts.Seed();
                 contacts = _contacts.GetAll();

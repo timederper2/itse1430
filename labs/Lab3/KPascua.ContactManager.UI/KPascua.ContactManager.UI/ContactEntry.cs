@@ -10,31 +10,28 @@ namespace KPascua.ContactManager.UI
             InitializeComponent();
         }
 
-        /// <summary>Gets or sets the movie being edited.</summary>
+       
         public Contact SelectedContact { get; set; }
 
         protected override void OnLoad ( EventArgs e )
         {
             base.OnLoad(e);
 
-            //Do any init just before UI is rendered
             if (SelectedContact != null)
             {
-                //Load UI
                 _txtFirstName.Text = SelectedContact.FirstName;
                 _txtLastName.Text = SelectedContact.LastName;
                 _chkFavoriteContact.Checked = SelectedContact.IsFavorite;
                 _txtEmail.Text = SelectedContact.Email;
                 _txtNotes.Text = SelectedContact.Notes;
-            };
+            }
 
-            //Force validation
             ValidateChildren();
         }
 
         private void OnSave ( object sender, EventArgs e )
         {
-            //Force validation of children
+            
             if (!ValidateChildren())
                 return;
 
@@ -47,18 +44,12 @@ namespace KPascua.ContactManager.UI
             contact.Email = _txtEmail.Text;
             contact.Notes = _txtNotes.Text;
 
-            //var validator = new ObjectValidator();            
-            //if (!movie.Validate(out var error))
-            //if (!new ObjectValidator().IsValid(movie, out var error))
             if (!ObjectValidator.IsValid(contact, out var error))
             {
                 DisplayError(error, "Save");
                 return;
             };
 
-            //Get rid of form by
-            // setting Form's DialogResult to a reasonable value
-            // Call Close()
             SelectedContact = contact;
             DialogResult = DialogResult.OK;
             Close();
@@ -73,34 +64,32 @@ namespace KPascua.ContactManager.UI
 
         #endregion
 
-        private void OnValidateTitle ( object sender, CancelEventArgs e )
+        private void OnValidateLast ( object sender, CancelEventArgs e )
         {
             var control = sender as TextBox;
 
             if (String.IsNullOrEmpty(control.Text))
             {
-                //Not valid
-                _errors.SetError(control, "Title is required");
+                
+                _errors.SetError(control, "Last Name is required");
                 e.Cancel = true;
             } else
             {
-                //Valid
+                
                 _errors.SetError(control, "");
             };
         }
 
-        private void OnValidateRating ( object sender, CancelEventArgs e )
+        private void OnValidateEmail ( object sender, CancelEventArgs e )
         {
             var control = sender as ComboBox;
 
             if (String.IsNullOrEmpty(control.Text))
             {
-                //Not valid
-                _errors.SetError(control, "Rating is required");
+                _errors.SetError(control, "Email is required");
                 e.Cancel = true;
             } else
-            {
-                //Valid
+            { 
                 _errors.SetError(control, "");
             };
         }
