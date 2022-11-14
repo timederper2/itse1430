@@ -40,7 +40,7 @@ public partial class ContactDisplay : Form
     {
         base.OnLoad(e);
 
-        UpdateUI(true);
+        UpdateUI(false);
     }
 
     private void OnContactAdd ( object sender, EventArgs e )
@@ -135,7 +135,10 @@ public partial class ContactDisplay : Form
                           .ThenBy(x => x.FirstName)
                           .ToArray();
       
-        _lstContacts.Items.AddRange(items);
+        for (int i = 0; i < items.Length; i++)
+        {
+            _lstContacts.Items.Add(items[i].LastName);
+        }
        
     }
     

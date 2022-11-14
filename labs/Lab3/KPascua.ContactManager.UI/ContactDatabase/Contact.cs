@@ -13,10 +13,10 @@ namespace ContactDatabase
 
         }
 
-        public Contact ( string firstName, string notes ) : base()
+        public Contact ( string lastName, string email ) : base()
         {
-            FirstName = firstName;
-            Notes = notes;
+            LastName = lastName;
+            Email = email;
         }
         public int Id { get; set; }
         public string FirstName

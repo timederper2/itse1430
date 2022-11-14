@@ -98,7 +98,7 @@ namespace ContactDatabase
        
         protected abstract Contact GetCore ( int id );
 
-        protected abstract IEnumerable<Contact> GetAllCore ();
+        protected abstract IEnumerable<Contact> GetAllCore();
 
         
         protected abstract void RemoveCore ( int id );

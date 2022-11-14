@@ -12,7 +12,7 @@ namespace ContactDatabase
 
         Contact Get ( int id );
 
-        IEnumerable<Contact> GetAll ();
+        IEnumerable<Contact> GetAll();
 
         void Remove (int id );
 

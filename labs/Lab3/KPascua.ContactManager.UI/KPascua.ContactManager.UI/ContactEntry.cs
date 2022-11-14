@@ -19,8 +19,8 @@ namespace KPascua.ContactManager.UI
 
             if (SelectedContact != null)
             {
-                _txtFirstName.Text = SelectedContact.FirstName;
                 _txtLastName.Text = SelectedContact.LastName;
+                _txtFirstName.Text = SelectedContact.FirstName;
                 _chkFavoriteContact.Checked = SelectedContact.IsFavorite;
                 _txtEmail.Text = SelectedContact.Email;
                 _txtNotes.Text = SelectedContact.Notes;
