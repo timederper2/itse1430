@@ -62,32 +62,32 @@ namespace KPascua.ContactManager.UI
 
         private void OnContactDelete ( object sender, EventArgs e )
         {
-            var movie = GetSelectedContact();
-            if (movie == null)
+            var contact = GetSelectedContact();
+            if (contact == null)
                 return;
 
-            if (!Confirm($"Are you sure you want to delete '{contact.Title}'?", "Delete"))
+            if (!Confirm($"Are you sure you want to delete '{contact.LastName}'?", "Delete"))
                 return;
 
-            _contacts.Remove(movie.Id);
+            _contacts.Remove(contact.Id);
             UpdateUI();
         }
 
-        private void OnMovieEdit ( object sender, EventArgs e )
+        private void OnContactEdit ( object sender, EventArgs e )
         {
-            var movie = GetSelectedContact();
-            if (movie == null)
+            var contact = GetSelectedContact();
+            if (contact == null)
                 return;
 
             var child = new ContactEntry();
-            child.SelectedContact = movie;
+            child.SelectedContact = contact;
 
             do
             {
                 if (child.ShowDialog(this) != DialogResult.OK)
                     return;
 
-                if (_contacts.Update(contact.Id, child.SelectedMovie, out var error))
+                if (_contacts.Update(contact.Id, child.SelectedContact, out var error))
                 {
                     UpdateUI();
                     return;
@@ -118,19 +118,10 @@ namespace KPascua.ContactManager.UI
         {
             var contacts = _contacts.GetAll();
 
-            //Extension methods - static methods on static classes
-            // 1. Expose a static method as an instance method for discoverability
-            // 2. Called like instance methods (on an instance)
-            // 3. Compiler rewrites code to call static method on static class
-            //Enumerable.Count(movies) == movies.Count()            
-            if (initialLoad &&
-                    //movies.Count() == 0)
-                    //movies.FirstOrDefault() == null)            
-                    contacts.Any())
+            if (initialLoad && contacts.Any())
             {
                 if (Confirm("Do you want to seed some movies?", "Database Empty"))
                 {
-                    //SeedMovieDatabase.Seed(_movies);
                     _contacts.Seed();
                     contacts = _contacts.GetAll();
                 };
@@ -138,42 +129,15 @@ namespace KPascua.ContactManager.UI
 
             _lstContacts.Items.Clear();
 
-            //Func<Movie, string> someFunc = OrderByTitle;
-            //var someResult = someFunc(new Movie());
-
-            //Order movies by title, then by release year
-            //Chain calls together
-            //          movies.OrderBy(OrderByTitle());
-            //  foreach item in source
-            //      sortValue = func(item)
-            //      compare sortValue to other values
-            //var items = movies.OrderBy(OrderByTitle)
-            //               .ThenBy(OrderByReleaseYear)
             var items = contacts.OrderBy(x => x.Title)
-                              .ThenBy(x => x.ReleaseYear)
-                              .ToArray();
-            //movies = movies.ThenBy();
-
-            //Use Enumerable 
-            //_lstMovies.Items.AddRange(Enumerable.ToArray(movies));
+                              .ThenBy(x => x.ReleaseYear);
+          
             _lstContacts.Items.AddRange(items);
-            //foreach (var movie in movies)
-            //    _lstMovies.Items.Add(movie);
+           
         }
-        //private string OrderByTitle ( Movie movie )  //Func<Movie, string>
-        //{
-        //    return movie.Title;
-        //}
-        //private int OrderByReleaseYear ( Movie movie )  //Func<Movie, int>
-        //{
-        //    return movie.ReleaseYear;
-        //}
-
-        private Contact GetSelectedMovie ()
-        {
-            //var allTextBoxes = Controls.OfType<TextBox>();
-            //IEnumerable<Movie> temp = _lstMovies.SelectedItems.OfType<Movie>();
-
+        
+        private Contact GetSelectedContact ()
+        { 
             return _lstContacts.SelectedItem as Contact;
         }
 
@@ -189,6 +153,6 @@ namespace KPascua.ContactManager.UI
             MessageBox.Show(this, message, title, MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
-        private IContactDatabase _contacts = new Memory.MemoryMovieDatabase();
+        private IContactDatabase _contacts = new Memory.MemoryContactDatabase();
     }
 }
