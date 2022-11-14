@@ -1,4 +1,4 @@
-﻿namespace KennethVPascua.ContactManager.UI
+﻿namespace KPascua.ContactManager.UI
 {
     partial class ContactDisplay
     {
@@ -121,4 +121,3 @@
         private System.Windows.Forms.ListBox _lstContacts;
     }
 }
-

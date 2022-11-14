@@ -30,7 +30,7 @@ namespace KennethVPascua.ContactManager.UI.Properties
         private static global::System.Globalization.CultureInfo resourceCulture;
 
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Resources()
+        internal Resources ()
         {
         }
 
@@ -40,8 +40,7 @@ namespace KennethVPascua.ContactManager.UI.Properties
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
         internal static global::System.Resources.ResourceManager ResourceManager
         {
-            get
-            {
+            get {
                 if ((resourceMan == null))
                 {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("KennethVPascua.ContactManager.UI.Properties.Resources", typeof(Resources).Assembly);
@@ -58,12 +57,10 @@ namespace KennethVPascua.ContactManager.UI.Properties
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
         internal static global::System.Globalization.CultureInfo Culture
         {
-            get
-            {
+            get {
                 return resourceCulture;
             }
-            set
-            {
+            set {
                 resourceCulture = value;
             }
         }

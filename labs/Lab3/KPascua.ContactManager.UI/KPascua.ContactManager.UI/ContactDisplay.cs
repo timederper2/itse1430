@@ -8,7 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace KennethVPascua.ContactManager.UI
+using Microsoft.VisualBasic.Devices;
+
+namespace KPascua.ContactManager.UI
 {
     public partial class ContactDisplay : Form
     {
@@ -43,7 +45,7 @@ namespace KennethVPascua.ContactManager.UI
         //Called to handle Movies\Add
         private void OnMovieAdd ( object sender, EventArgs e )
         {
-            var child = new MovieForm();
+            var child = new ContactEntry();
 
             do
             {
@@ -51,7 +53,7 @@ namespace KennethVPascua.ContactManager.UI
                 if (child.ShowDialog(this) != DialogResult.OK)
                     return;
 
-                if (_movies.Add(child.SelectedMovie, out var error) != null)
+                if (_movies.Add(child.SelectedContact, out var error) != null)
                 {
                     UpdateUI();
                     return;
@@ -80,7 +82,7 @@ namespace KennethVPascua.ContactManager.UI
             if (movie == null)
                 return;
 
-            var child = new MovieForm();
+            var child = new ContactEntry();
             child.SelectedMovie = movie;
 
             do
@@ -117,8 +119,7 @@ namespace KennethVPascua.ContactManager.UI
 
         private void UpdateUI ( bool initialLoad )
         {
-            //Get movies
-            var movies = _movies.GetAll();
+            var contacts = _movies.GetAll();
 
             //Extension methods - static methods on static classes
             // 1. Expose a static method as an instance method for discoverability
