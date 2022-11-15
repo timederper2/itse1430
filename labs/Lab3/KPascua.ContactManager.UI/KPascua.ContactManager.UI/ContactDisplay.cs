@@ -1,16 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.Data;
 
 using ContactDatabase;
-
-using Microsoft.VisualBasic.Devices;
 
 namespace KPascua.ContactManager.UI;
 
@@ -40,7 +30,7 @@ public partial class ContactDisplay : Form
     {
         base.OnLoad(e);
 
-        UpdateUI(false);
+        UpdateUI(true);
     }
 
     private void OnContactAdd ( object sender, EventArgs e )
@@ -121,7 +111,7 @@ public partial class ContactDisplay : Form
     {
         var contacts = _contacts.GetAll();
 
-        if (initialLoad && contacts.Any())
+        if (initialLoad && !contacts.Any())
         {
             if (Confirm("Do you want to seed some contacts?", "Database Empty"))
             {
@@ -136,29 +126,14 @@ public partial class ContactDisplay : Form
                           .ThenBy(x => x.FirstName)
                           .ToArray();
 
-        foreach (var contact in items)
-        {
-            _lstContacts.Items.Add("Last:   " + contact.LastName + "  First: " + contact.FirstName + "  Email: " + contact.Email);
-        }
+        _lstContacts.Items.AddRange(items);
         
+
     }
-    
+
     private Contact GetSelectedContact ()
     {
-        var contactsSpare = _contacts.GetAll();
-        string line = _lstContacts.SelectedItem as string;
-        int search = line.IndexOf("Email");
-        string target = line.Substring(search + 7);
-        Contact found = null;
-
-        foreach (var contact in contactsSpare)
-        {
-            if (contact.Email == target)
-            {
-                found = contact;
-            }
-        }
-        return found;
+       return _lstContacts.SelectedItem as Contact;
     }
 
     private bool Confirm ( string message, string title )

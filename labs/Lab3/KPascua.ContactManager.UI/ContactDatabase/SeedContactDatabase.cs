@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ContactDatabase
+﻿namespace ContactDatabase
 {
     public static class MovieDatabaseExtensions
-    {   public static void Seed ( this IContactDatabase database )
+    {
+        public static void Seed ( this IContactDatabase database )
         {
             var contacts = new Contact[] {
                 new Contact() {

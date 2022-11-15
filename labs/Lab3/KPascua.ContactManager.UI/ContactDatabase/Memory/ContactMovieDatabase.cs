@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ContactDatabase.Memory
+﻿namespace ContactDatabase.Memory
 {
     public class MemoryContactDatabase : ContactDatabase
     {
@@ -23,18 +17,18 @@ namespace ContactDatabase.Memory
 
         protected override IEnumerable<Contact> GetAllCore ()
         {
-           
+
             return from contact in _contacts
                    orderby contact.LastName, contact.FirstName
                    select contact.Clone();
         }
 
-        
+
         protected override void RemoveCore ( int id )
         {
-            var movie = FindById(id);
-            _contacts.Remove(movie);
-          
+            var contact = FindById(id);
+            _contacts.Remove(contact);
+
         }
 
         protected override void UpdateCore ( int id, Contact movie )
@@ -44,8 +38,8 @@ namespace ContactDatabase.Memory
             oldContact.Id = id;
         }
 
-       
-        protected override Contact FindByTitle ( string title )
+
+        protected override Contact FindByLastName ( string title )
         {
             return _contacts.FirstOrDefault(
                         x => String.Equals(x.LastName, title, StringComparison.OrdinalIgnoreCase));
@@ -53,14 +47,14 @@ namespace ContactDatabase.Memory
 
         #region Private Members
 
-       
+
         private Contact FindById ( int id )
         {
-        
+
             return _contacts.FirstOrDefault(x => x.Id == id);
 
         }
-     
+
         private int _id = 1;
 
         private List<Contact> _contacts = new List<Contact>();

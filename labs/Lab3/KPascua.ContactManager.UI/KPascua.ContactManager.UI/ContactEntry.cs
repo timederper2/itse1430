@@ -1,5 +1,6 @@
-using ContactDatabase;
 using System.ComponentModel;
+
+using ContactDatabase;
 
 namespace KPascua.ContactManager.UI
 {
@@ -9,7 +10,7 @@ namespace KPascua.ContactManager.UI
         {
             InitializeComponent();
         }
-       
+
         public Contact SelectedContact { get; set; }
 
         protected override void OnLoad ( EventArgs e )
@@ -30,7 +31,7 @@ namespace KPascua.ContactManager.UI
 
         private void OnSave ( object sender, EventArgs e )
         {
-            
+
             if (!ValidateChildren())
                 return;
 
@@ -69,12 +70,12 @@ namespace KPascua.ContactManager.UI
 
             if (String.IsNullOrEmpty(control.Text))
             {
-                
+
                 _errors.SetError(control, "Last Name is required");
                 e.Cancel = true;
             } else
             {
-                
+
                 _errors.SetError(control, "");
             };
         }
@@ -88,7 +89,7 @@ namespace KPascua.ContactManager.UI
                 _errors.SetError(control, "Email is required");
                 e.Cancel = true;
             } else
-            { 
+            {
                 _errors.SetError(control, "");
             };
         }
