@@ -40,7 +40,7 @@ public partial class ContactDisplay : Form
     {
         base.OnLoad(e);
 
-        UpdateUI(true);
+        UpdateUI(false);
     }
 
     private void OnContactAdd ( object sender, EventArgs e )
@@ -65,6 +65,7 @@ public partial class ContactDisplay : Form
     private void OnContactDelete ( object sender, EventArgs e )
     {
         var contact = GetSelectedContact();
+
         if (contact == null)
             return;
 
@@ -113,7 +114,7 @@ public partial class ContactDisplay : Form
 
     private void UpdateUI ()
     {
-        UpdateUI(false);
+        UpdateUI(true);
     }
 
     private void UpdateUI ( bool initialLoad )
@@ -137,15 +138,27 @@ public partial class ContactDisplay : Form
 
         foreach (var contact in items)
         {
-            _lstContacts.Items.Add(contact);
-            contact.CopyTo(contact);
+            _lstContacts.Items.Add("Last:   " + contact.LastName + "  First: " + contact.FirstName + "  Email: " + contact.Email);
         }
         
     }
     
     private Contact GetSelectedContact ()
-    { 
-        return _lstContacts.SelectedItem as Contact;
+    {
+        var contactsSpare = _contacts.GetAll();
+        string line = _lstContacts.SelectedItem as string;
+        int search = line.IndexOf("Email");
+        string target = line.Substring(search + 7);
+        Contact found = null;
+
+        foreach (var contact in contactsSpare)
+        {
+            if (contact.Email == target)
+            {
+                found = contact;
+            }
+        }
+        return found;
     }
 
     private bool Confirm ( string message, string title )

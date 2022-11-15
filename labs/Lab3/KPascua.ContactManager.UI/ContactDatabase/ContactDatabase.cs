@@ -19,10 +19,10 @@ namespace ContactDatabase
             if (!ObjectValidator.IsValid(contact, out errorMessage))
                 return null;
 
-            var existing = FindByTitle(contact.LastName);
+            var existing = FindByLastName(contact.LastName);
             if (existing != null)
             {
-                errorMessage = "Movie must be unique";
+                errorMessage = "Contact must be unique";
                 return null;
             };
 
@@ -79,7 +79,7 @@ namespace ContactDatabase
             };
 
             //Must be unique
-            var existing = FindByTitle(contact.LastName);
+            var existing = FindByLastName(contact.LastName);
             if (existing != null && existing.Id != id)
             {
                 errorMessage = "Contact must be unique";
@@ -106,6 +106,6 @@ namespace ContactDatabase
         
         protected abstract void UpdateCore ( int id, Contact contact );
 
-        protected abstract Contact FindByTitle ( string lastName );
+        protected abstract Contact FindByLastName ( string lastName );
     }
 }

@@ -69,6 +69,7 @@
             this._txtEmail.Size = new System.Drawing.Size(230, 23);
             this._txtEmail.TabIndex = 2;
             this._txtEmail.Validating += new System.ComponentModel.CancelEventHandler(this.OnValidateEmail);
+            this._txtEmail.Validating += new System.ComponentModel.CancelEventHandler(this.IsValidEmail);
             // 
             // _txtNotes
             // 

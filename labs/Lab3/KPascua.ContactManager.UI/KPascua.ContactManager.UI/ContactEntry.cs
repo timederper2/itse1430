@@ -93,5 +93,9 @@ namespace KPascua.ContactManager.UI
             };
         }
 
+        bool IsValidEmail ( string source )
+        {
+            return System.Net.Mail.MailAddress.TryCreate(source, out var address);
+        }
     }
 }

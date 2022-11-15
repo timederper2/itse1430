@@ -80,10 +80,10 @@ namespace ContactDatabase
             var errors = new List<ValidationResult>();
 
             if (LastName.Length == 0)
-                errors.Add(new ValidationResult("Title is required", new[] { nameof(LastName) }));
+                errors.Add(new ValidationResult("Last Name is required", new[] { nameof(LastName) }));
 
             if (Email.Length == 0)
-                errors.Add(new ValidationResult("Rating is required", new[] { nameof(Email) }));
+                errors.Add(new ValidationResult("Email is required", new[] { nameof(Email) }));
 
             return errors;
         }
